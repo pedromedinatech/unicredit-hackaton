@@ -129,10 +129,9 @@ export default function AdminLeadsPage() {
                 <thead>
                   <tr className="border-b border-unicredit-line bg-unicredit-mist text-left text-[11px] font-semibold uppercase tracking-wider text-unicredit-navy/60">
                     <th className="px-5 py-3">Name</th>
-                    <th className="px-5 py-3">Age / Employment</th>
-                    <th className="px-5 py-3">Income / Savings</th>
-                    <th className="px-5 py-3">Goals</th>
-                    <th className="px-5 py-3">Risk</th>
+                    <th className="px-5 py-3">Segment</th>
+                    <th className="px-5 py-3">ESG</th>
+                    <th className="px-5 py-3">Conversation</th>
                     <th className="px-5 py-3">Date</th>
                     <th className="px-5 py-3">Status</th>
                   </tr>
@@ -146,23 +145,23 @@ export default function AdminLeadsPage() {
                           <p className="mt-0.5 text-[11px] text-unicredit-navy/50 italic">{lead.advisor_reason}</p>
                         )}
                       </td>
-                      <td className="px-5 py-4 text-unicredit-navy/80">
-                        <p>{lead.age ?? "—"} y/o</p>
-                        <p className="text-xs text-unicredit-navy/55">{lead.employment_status ?? "—"}</p>
-                      </td>
-                      <td className="px-5 py-4 text-unicredit-navy/80">
-                        <p>€{lead.monthly_income ?? "—"}/mo</p>
-                        <p className="text-xs text-unicredit-navy/55">Savings: €{lead.savings ?? "—"}</p>
-                      </td>
-                      <td className="px-5 py-4 max-w-[180px]">
-                        <p className="text-xs text-unicredit-navy/70 leading-relaxed">
-                          {lead.goals?.join(", ") ?? "—"}
-                        </p>
-                      </td>
                       <td className="px-5 py-4">
-                        <span className="rounded-full bg-unicredit-mist px-2 py-0.5 text-xs font-medium text-unicredit-navy">
-                          {lead.risk_tolerance ?? "—"}
+                        <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                          lead.segment === "AGGRESSIVE" ? "bg-red-100 text-red-700" :
+                          lead.segment === "GROWTH" ? "bg-orange-100 text-orange-700" :
+                          lead.segment === "BALANCED" ? "bg-yellow-100 text-yellow-700" :
+                          "bg-green-100 text-green-700"
+                        }`}>
+                          {lead.segment ?? "—"}
                         </span>
+                      </td>
+                      <td className="px-5 py-4 text-center text-unicredit-navy/70 text-sm">
+                        {lead.esg_level != null ? `${lead.esg_level}/3` : "—"}
+                      </td>
+                      <td className="px-5 py-4 max-w-[260px]">
+                        <p className="text-xs text-unicredit-navy/70 leading-relaxed line-clamp-3">
+                          {lead.conversation_summary ?? "—"}
+                        </p>
                       </td>
                       <td className="px-5 py-4 text-xs text-unicredit-navy/55 whitespace-nowrap">
                         {new Date(lead.created_at).toLocaleDateString("en-GB", {
