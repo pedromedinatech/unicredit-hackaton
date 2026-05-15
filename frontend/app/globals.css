@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-unicredit-red: #e30613;
+  --color-unicredit-red-dark: #b8050f;
+  --color-unicredit-red-soft: #fde3e5;
+  --color-unicredit-navy: #1a1a2e;
+  --color-unicredit-navy-soft: #2a2a44;
+  --color-unicredit-ink: #0b0b14;
+  --color-unicredit-mist: #f5f6fa;
+  --color-unicredit-line: #e6e8f0;
+
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+
+  --radius-card: 12px;
+  --radius-chip: 999px;
+
+  --shadow-card: 0 1px 2px rgba(10, 10, 20, 0.06), 0 4px 16px rgba(10, 10, 20, 0.04);
+  --shadow-popover: 0 4px 12px rgba(10, 10, 20, 0.08), 0 16px 48px rgba(10, 10, 20, 0.12);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: var(--color-unicredit-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animated arc loader echoing the UniCredit logo */
+@keyframes uc-arc-draw {
+  0% {
+    stroke-dashoffset: 220;
+  }
+  60% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -220;
+  }
+}
+
+.uc-arc-stroke {
+  stroke-dasharray: 220;
+  animation: uc-arc-draw 1.8s ease-in-out infinite;
+}
+
+@keyframes uc-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uc-fade-up {
+  animation: uc-fade-up 0.35s ease-out both;
+}
+
+/* Custom scrollbar for chat */
+.uc-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.uc-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-unicredit-line);
+  border-radius: 999px;
+}
+.uc-scroll::-webkit-scrollbar-thumb:hover {
+  background: #d2d6e3;
+}
