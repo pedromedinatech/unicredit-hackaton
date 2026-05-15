@@ -10,6 +10,7 @@ import {
   type OnboardingQuestion,
 } from "@/lib/onboardingQuestions";
 import { saveProfile, createChat } from "@/lib/demoStore";
+import { calculateProfile } from "@/lib/profilingService";
 import type { UserProfile } from "@/lib/userProfile";
 
 type Answers = Record<number, unknown>;
@@ -27,40 +28,37 @@ function hasValue(question: OnboardingQuestion, answers: Answers): boolean {
 }
 
 function buildProfile(answers: Answers): UserProfile {
-  const arr = (id: number): string[] => {
-    const v = answers[id];
-    return Array.isArray(v) ? (v as string[]) : [];
-  };
-  const str = (id: number): string => {
-    const v = answers[id];
-    return typeof v === "string" ? v : "";
-  };
-  const num = (id: number): number => {
-    const v = answers[id];
-    return typeof v === "number" ? v : 0;
+  const name = typeof answers[1] === "string" ? answers[1] : "";
+
+  // Map radio answers to single letters (A/B/C/D)
+  const extractLetter = (answerText: string): string => {
+    const match = answerText?.match(/^([A-D])\)/);
+    return match ? match[1] : "A";
   };
 
-  const hasDebts = answers[10] === "Yes";
+  const q1 = extractLetter(answers[2] as string);
+  const q2 = extractLetter(answers[3] as string);
+  const q3 = extractLetter(answers[4] as string);
+  const q4 = extractLetter(answers[5] as string);
+  const q5 = extractLetter(answers[6] as string);
+  const q6 = extractLetter(answers[7] as string);
+  const q7 = extractLetter(answers[8] as string);
+  const q8 = extractLetter(answers[9] as string);
+  const q9 = extractLetter(answers[10] as string);
 
-  return {
-    name: str(1),
-    age: num(2),
-    employment_status: str(3),
-    monthly_income: num(4),
-    monthly_spending: num(5),
-    savings: num(6),
-    goals: arr(7),
-    risk_tolerance: str(8),
-    primary_interest: str(9) || undefined,
-    has_debts: hasDebts,
-    debt_type: hasDebts ? str(11) || null : null,
-    has_used_products_before: answers[12] === "Yes",
-    interested_products: arr(13),
-    money_problems: arr(14),
-    checking_frequency: str(15),
-    banking_preference: str(16),
-    additional_notes: str(17) || undefined,
+  const answerMap: Record<number, string> = {
+    2: q1,
+    3: q2,
+    4: q3,
+    5: q4,
+    6: q5,
+    7: q6,
+    8: q7,
+    9: q8,
+    10: q9,
   };
+
+  return calculateProfile(name, answerMap);
 }
 
 export function Onboarding() {
@@ -131,7 +129,7 @@ export function Onboarding() {
           Build your profile
         </h1>
         <p className="mt-1 text-sm text-unicredit-navy/70">
-          17 quick questions so the coach understands your situation.
+          10 quick questions so the coach understands your situation.
         </p>
       </div>
 

@@ -1,19 +1,21 @@
+export type Segment = 'CONSERVATIVE' | 'BALANCED' | 'GROWTH' | 'AGGRESSIVE';
+
 export interface UserProfile {
   name: string;
-  age: number;
-  employment_status: string;
-  monthly_income: number;
-  monthly_spending: number;
-  savings: number;
-  goals: string[];
-  risk_tolerance: string;
-  primary_interest?: string;
-  has_debts: boolean;
-  debt_type?: string | null;
-  has_used_products_before: boolean;
-  interested_products: string[];
-  money_problems: string[];
-  checking_frequency: string;
-  banking_preference: string;
-  additional_notes?: string;
+  // MiFID II raw answers (A/B/C/D)
+  q1_objective: string;
+  q2_loss_reaction: string;
+  q3_horizon: string;
+  q4_knowledge: string;
+  q5_savings_rate: string;
+  q6_emergency: string;
+  q7_loss_threshold: string;
+  q8_return_expect: string;
+  q9_esg: string;
+  // Computed scores
+  segment: Segment;
+  esg_level: number; // 0-3
+  sophistication: number; // 0-2
+  expectation_mismatch: boolean;
+  forced_conservative: boolean;
 }

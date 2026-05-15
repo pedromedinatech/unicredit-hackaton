@@ -11,7 +11,9 @@
       "Debit card included"
     ],
     "target_audience": ["students", "young professionals", "freelancers", "anyone new to banking"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/conturi-curente.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/conturi-curente.html",
+    "segments": ["CONSERVATIVE", "BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "savings_account",
@@ -25,7 +27,9 @@
       "No fees"
     ],
     "target_audience": ["savers", "students", "anyone building an emergency fund", "low risk tolerance"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/conturi-de-economii.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/conturi-de-economii.html",
+    "segments": ["CONSERVATIVE", "BALANCED"],
+    "min_sophistication": 0
   },
   {
     "id": "term_deposit",
@@ -39,7 +43,9 @@
       "Starting from 500 RON"
     ],
     "target_audience": ["savers with specific goals", "low risk tolerance", "travel savers", "people with existing savings"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/depozite-la-termen.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/depozite-la-termen.html",
+    "segments": ["CONSERVATIVE", "BALANCED"],
+    "min_sophistication": 0
   },
   {
     "id": "credit_card",
@@ -53,13 +59,15 @@
       "Apple Pay & Google Pay"
     ],
     "target_audience": ["young adults", "credit builders", "frequent shoppers", "students"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/carduri-de-credit.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/carduri-de-credit.html",
+    "segments": ["CONSERVATIVE", "BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "personal_loan",
     "name": "Personal Loan",
     "category": "Credits",
-    "description": "A personal loan for any purpose — travel, electronics, home improvements. Fixed monthly payments and competitive interest rates.",
+    "description": "A personal loan for any purpose: travel, electronics, home improvements. Fixed monthly payments and competitive interest rates.",
     "key_benefits": [
       "Fixed monthly payments",
       "Flexible loan amounts",
@@ -67,7 +75,9 @@
       "No collateral required"
     ],
     "target_audience": ["anyone needing a lump sum", "home improvement", "large purchases", "debt consolidation"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-de-nevoi-personale.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-de-nevoi-personale.html",
+    "segments": ["BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "mortgage",
@@ -81,7 +91,9 @@
       "Fixed or variable rates"
     ],
     "target_audience": ["home buyers", "people looking to refinance", "young families"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-ipotecar.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-ipotecar.html",
+    "segments": ["BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "investment_funds",
@@ -95,7 +107,9 @@
       "Various risk profiles available"
     ],
     "target_audience": ["medium-high risk tolerance", "long-term investors", "wealth builders"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/fonduri-de-investitii.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/fonduri-de-investitii.html",
+    "segments": ["GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 1
   },
   {
     "id": "mobile_banking",
@@ -110,7 +124,9 @@
       "Free"
     ],
     "target_audience": ["everyone", "tech-savvy users", "busy professionals"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/servicii-digitale/mobile-banking.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/servicii-digitale/mobile-banking.html",
+    "segments": ["CONSERVATIVE", "BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "genius_protect",
@@ -124,7 +140,9 @@
       "Simple claims process"
     ],
     "target_audience": ["young adults", "freelancers", "anyone seeking financial safety net"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/asigurari/genius-protect.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/asigurari/genius-protect.html",
+    "segments": ["CONSERVATIVE", "BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   },
   {
     "id": "meal_card",
@@ -138,6 +156,8 @@
       "Easy management online"
     ],
     "target_audience": ["employees", "young professionals", "anyone with meal benefits"],
-    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/card-de-masa.html"
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/card-de-masa.html",
+    "segments": ["CONSERVATIVE", "BALANCED", "GROWTH", "AGGRESSIVE"],
+    "min_sophistication": 0
   }
 ]

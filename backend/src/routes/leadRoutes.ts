@@ -28,17 +28,8 @@ router.post('/leads', async (req: Request, res: Response) => {
 
     const lead: LeadInput = {
       name: clientProfile.name,
-      age: clientProfile.age,
-      employment_status: clientProfile.employment_status,
-      monthly_income: clientProfile.monthly_income,
-      monthly_spending: clientProfile.monthly_spending,
-      savings: clientProfile.savings,
-      goals: clientProfile.goals,
-      risk_tolerance: clientProfile.risk_tolerance,
-      interested_products: clientProfile.interested_products,
-      money_problems: clientProfile.money_problems,
-      banking_preference: clientProfile.banking_preference,
-      additional_notes: clientProfile.additional_notes,
+      segment: clientProfile.segment,
+      esg_level: clientProfile.esg_level,
       conversation_summary: conversationSummary,
       advisor_reason: advisorReason,
     };

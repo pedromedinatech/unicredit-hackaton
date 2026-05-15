@@ -17,19 +17,10 @@ export function initDatabase(): void {
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      age INTEGER,
-      employment_status TEXT,
-      monthly_income REAL,
-      monthly_spending REAL,
-      savings REAL,
-      goals TEXT,
-      risk_tolerance TEXT,
-      interested_products TEXT,
-      money_problems TEXT,
-      banking_preference TEXT,
+      segment TEXT,
+      esg_level INTEGER,
       conversation_summary TEXT,
       advisor_reason TEXT,
-      additional_notes TEXT,
       status TEXT DEFAULT 'new',
       created_at TEXT DEFAULT (datetime('now'))
     )

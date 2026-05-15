@@ -4,21 +4,33 @@ import { UserProfile, Product, ChatResponse } from '../types';
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 function buildProfileSummary(profile: UserProfile): string {
-  return [
+  const esgLabels: Record<number, string> = {
+    0: 'No preference, prioritize returns',
+    1: 'Interested, but not a deciding factor',
+    2: 'Prefer ESG if returns are comparable',
+    3: 'Only certified sustainable-impact products',
+  };
+
+  const objectiveLabels: Record<string, string> = {
+    A: 'Protect from inflation',
+    B: 'Generate regular income',
+    C: 'Grow wealth long-term',
+    D: 'Achieve high returns',
+  };
+
+  const lines = [
     `Name: ${profile.name}`,
-    `Age: ${profile.age}`,
-    `Employment: ${profile.employment_status}`,
-    `Monthly income: €${profile.monthly_income}`,
-    `Monthly spending: €${profile.monthly_spending}`,
-    `Savings: €${profile.savings}`,
-    `Financial goals: ${profile.goals.join(', ')}`,
-    `Risk tolerance: ${profile.risk_tolerance}`,
-    `Has debts: ${profile.has_debts ? `Yes (${profile.debt_type ?? 'unspecified'})` : 'No'}`,
-    `Money problems: ${profile.money_problems.length ? profile.money_problems.join(', ') : 'None'}`,
-    `Interested in: ${profile.interested_products.length ? profile.interested_products.join(', ') : 'Open to suggestions'}`,
-    `Banking preference: ${profile.banking_preference}`,
-    ...(profile.additional_notes ? [`Notes: ${profile.additional_notes}`] : []),
-  ].join('\n');
+    `MiFID II Segment: ${profile.segment}${profile.forced_conservative ? ' (forced, no emergency fund)' : ''}`,
+    `Financial Knowledge: ${profile.sophistication === 0 ? 'Beginner' : profile.sophistication === 1 ? 'Intermediate' : 'Advanced'}`,
+    `ESG Preference: ${esgLabels[profile.esg_level] || 'Unknown'}`,
+    `Investment Objective: ${objectiveLabels[profile.q1_objective] || profile.q1_objective}`,
+  ];
+
+  if (profile.expectation_mismatch) {
+    lines.push(`⚠️ Note: Expectation mismatch detected (high return expectation vs. low risk tolerance)`);
+  }
+
+  return lines.join('\n');
 }
 
 function buildProductsCatalog(products: Product[]): string {
@@ -37,17 +49,22 @@ export async function chatWithRAG(
   products: Product[],
   conversationHistory: Array<{ role: string; content: string }> = []
 ): Promise<ChatResponse> {
-  const systemPrompt = `You are an expert AI Financial Coach for UniCredit Romania. Respond ONLY with valid JSON — no markdown fences, no text outside the JSON object.
+  // Pre-filter products by segment and sophistication
+  const eligibleProducts = products.filter(
+    (p) => p.segments.includes(profile.segment) && p.min_sophistication <= profile.sophistication
+  );
+
+  const systemPrompt = `You are an expert AI Financial Coach for UniCredit Romania. Respond ONLY with valid JSON, no markdown fences, no text outside the JSON object.
 
 CLIENT PROFILE:
 ${buildProfileSummary(profile)}
 
-UNICREDIT PRODUCT CATALOG:
-${buildProductsCatalog(products)}
+UNICREDIT PRODUCT CATALOG (pre-filtered for suitability):
+${buildProductsCatalog(eligibleProducts)}
 
 RESPONSE FORMAT (strict JSON, no extra fields):
 {
-  "response": "Friendly, personalized advice in 2-4 sentences. When relevant, mention the best product by name with its URL as a markdown link [Product Name](url). Keep it conversational — no branch addresses or phone numbers.",
+  "response": "Friendly, personalized advice in 2-4 sentences. When relevant, mention the best product by name with its URL as a markdown link [Product Name](url). Keep it conversational, no branch addresses or phone numbers.",
   "recommendations": [
     {
       "product_id": "<id from catalog>",
@@ -65,17 +82,19 @@ RESPONSE FORMAT (strict JSON, no extra fields):
 
 RULES:
 - Always respond in English
+- The client is classified as ${profile.segment} according to MiFID II guidelines
 - Personalize advice based on the client profile above
-- recommendations: 1-3 items, best fit first, fit_score 0-100
+- ONLY recommend products from the catalog above (they have been pre-filtered for suitability)
+- recommendations: 1-3 items, best fit first. fit_score should reflect how well the product matches the client's specific investment objectives and risk profile (0-100)
 - options: 2-4 short clickable choices when the conversation calls for a decision or exploration (e.g. "Tell me more about Investment Funds", "Show me savings options", "What's my risk level?"). Leave as [] if the response is already conclusive.
-- followups: 2-3 natural next questions the client might ask (different from options — these are open-ended questions, not choices)
+- followups: 2-3 natural next questions the client might ask (different from options, these are open-ended questions, not choices)
 - needs_human_advisor: true only for legal, compliance, or out-of-scope questions. Do NOT set this just because you want to suggest a call.
 - NEVER include branch addresses or phone numbers in the response text
-- LEAD QUALIFICATION — suggest_advisor logic:
+- LEAD QUALIFICATION, suggest_advisor logic:
   * Set to false on the first message (never suggest on first exchange)
-  * Set to true when: client shows specific product interest, has significant savings/income, mentions life events (buying home, starting business, having children), asks about investment or mortgage products
+  * Set to true when: client shows specific product interest, has significant portfolio considerations, mentions life events (buying home, starting business, having children), asks about investment or mortgage products
   * When suggest_advisor is true, naturally weave into your response: "Would you like a UniCredit advisor to give you a call and walk you through this personally?"
-  * Be warm and helpful, not pushy — frame it as added value, like a concierge service
+  * Be warm and helpful, not pushy, frame it as added value, like a concierge service
   * Only set to true once per conversation`;
 
   const messages = conversationHistory.map((msg) => ({
