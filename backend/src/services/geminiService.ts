@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { UserProfile, Product, Branch, ChatResponse } from '../types';
+import { UserProfile, Product, ChatResponse } from '../types';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -35,7 +35,6 @@ export async function chatWithRAG(
   message: string,
   profile: UserProfile,
   products: Product[],
-  branch: Branch,
   conversationHistory: Array<{ role: string; content: string }> = []
 ): Promise<ChatResponse> {
   const systemPrompt = `You are an expert AI Financial Coach for UniCredit Romania. Respond ONLY with valid JSON — no markdown fences, no text outside the JSON object.
@@ -43,16 +42,12 @@ export async function chatWithRAG(
 CLIENT PROFILE:
 ${buildProfileSummary(profile)}
 
-NEAREST BRANCH:
-${branch.name} — ${branch.address}
-Phone: ${branch.phone} | Email: ${branch.email} | Hours: ${branch.hours}
-
 UNICREDIT PRODUCT CATALOG:
 ${buildProductsCatalog(products)}
 
 RESPONSE FORMAT (strict JSON, no extra fields):
 {
-  "response": "Friendly, personalized advice in 2-4 sentences. Mention the best product by name with its URL as a markdown link [Product Name](url). End with: 📍 ${branch.address} | 📞 ${branch.phone}",
+  "response": "Friendly, personalized advice in 2-4 sentences. When relevant, mention the best product by name with its URL as a markdown link [Product Name](url). Keep it conversational — no branch addresses or phone numbers.",
   "recommendations": [
     {
       "product_id": "<id from catalog>",
@@ -61,6 +56,7 @@ RESPONSE FORMAT (strict JSON, no extra fields):
       "fit_score": <integer 0-100>
     }
   ],
+  "options": ["<clickable option 1>", "<clickable option 2>"],
   "followups": ["<follow-up question 1>", "<follow-up question 2>"],
   "needs_human_advisor": <true only if question is outside product scope or requires legal advice>,
   "advisor_reason": "<brief reason if needs_human_advisor is true, else null>",
@@ -71,13 +67,15 @@ RULES:
 - Always respond in English
 - Personalize advice based on the client profile above
 - recommendations: 1-3 items, best fit first, fit_score 0-100
-- followups: 2-3 natural next questions the client might ask
-- needs_human_advisor: true only for legal, compliance, or out-of-scope questions
+- options: 2-4 short clickable choices when the conversation calls for a decision or exploration (e.g. "Tell me more about Investment Funds", "Show me savings options", "What's my risk level?"). Leave as [] if the response is already conclusive.
+- followups: 2-3 natural next questions the client might ask (different from options — these are open-ended questions, not choices)
+- needs_human_advisor: true only for legal, compliance, or out-of-scope questions. Do NOT set this just because you want to suggest a call.
+- NEVER include branch addresses or phone numbers in the response text
 - LEAD QUALIFICATION — suggest_advisor logic:
   * Set to false on the first message (never suggest on first exchange)
   * Set to true when: client shows specific product interest, has significant savings/income, mentions life events (buying home, starting business, having children), asks about investment or mortgage products
-  * When suggest_advisor is true, naturally weave into your response: "Would you like a UniCredit advisor to reach out and walk you through this personally?"
-  * Be warm and helpful, not pushy — frame it as added value
+  * When suggest_advisor is true, naturally weave into your response: "Would you like a UniCredit advisor to give you a call and walk you through this personally?"
+  * Be warm and helpful, not pushy — frame it as added value, like a concierge service
   * Only set to true once per conversation`;
 
   const messages = conversationHistory.map((msg) => ({
@@ -106,6 +104,7 @@ RULES:
     return {
       response: raw,
       recommendations: [],
+      options: [],
       followups: [],
       needs_human_advisor: false,
       advisor_reason: null,

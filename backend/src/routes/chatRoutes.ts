@@ -1,12 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { defaultClientProfile } from '../data/clientProfile';
-import branchesData from '../data/branches.json';
 import productsData from '../data/products.json';
 import { chatWithRAG } from '../services/geminiService';
-import { ChatRequest, Branch, Product } from '../types';
+import { ChatRequest, Product } from '../types';
 
 const router = Router();
-const branch = branchesData[0] as Branch;
 const products = productsData as Product[];
 
 router.post('/chat', async (req: Request, res: Response) => {
@@ -19,7 +17,7 @@ router.post('/chat', async (req: Request, res: Response) => {
     }
 
     const profile = clientProfile || defaultClientProfile;
-    const chatResponse = await chatWithRAG(message, profile, products, branch, conversationHistory);
+    const chatResponse = await chatWithRAG(message, profile, products, conversationHistory);
 
     res.json(chatResponse);
   } catch (error) {

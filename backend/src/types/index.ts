@@ -60,6 +60,7 @@ export interface ChatResponse {
   response: string;
   recommendations: RecommendationCard[];
   followups: string[];
+  options: string[];
   needs_human_advisor: boolean;
   advisor_reason: string | null;
   suggest_advisor: boolean;

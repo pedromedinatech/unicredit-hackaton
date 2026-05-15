@@ -33,6 +33,7 @@ const EXAMPLES = [
 type CoachResponse = {
   response?: string;
   recommendations?: RecommendationCard[];
+  options?: string[];
   followups?: string[];
   needs_human_advisor?: boolean;
   advisor_reason?: string | null;
@@ -59,6 +60,7 @@ export function ChatClient({
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [options, setOptions] = useState<string[]>([]);
   const [followups, setFollowups] = useState<string[]>([]);
   const [advisor, setAdvisor] = useState<string | null>(null);
   const [showAdvisorCTA, setShowAdvisorCTA] = useState(false);
@@ -76,6 +78,7 @@ export function ChatClient({
       const text = rawText.trim();
       if (!text || pending) return;
       setError(null);
+      setOptions([]);
       setFollowups([]);
       setAdvisor(null);
 
@@ -95,10 +98,19 @@ export function ChatClient({
       setPending(true);
 
       try {
+        const history = messages.map((m) => ({
+          role: m.role,
+          content: m.content,
+        }));
+
         const res = await fetch(COACH_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, clientProfile: profile }),
+          body: JSON.stringify({
+            message: text,
+            clientProfile: profile,
+            conversationHistory: history,
+          }),
         });
 
         if (!res.ok) {
@@ -123,6 +135,7 @@ export function ChatClient({
           content: replyText,
           recommendations: recs ?? undefined,
         });
+        setOptions(body.options ?? []);
         setFollowups(body.followups ?? []);
 
         if (body.needs_human_advisor) {
@@ -230,6 +243,20 @@ export function ChatClient({
             <p className="rounded-lg bg-unicredit-red-soft px-3 py-2 text-sm text-unicredit-red">
               {error}
             </p>
+          )}
+          {options.length > 0 && !pending && (
+            <div className="flex flex-wrap gap-2 px-1">
+              {options.map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => send(opt)}
+                  className="rounded-full border border-unicredit-red/40 bg-white px-3 py-1.5 text-xs font-semibold text-unicredit-red hover:bg-unicredit-red hover:text-white transition-colors"
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
           )}
           {followups.length > 0 && !pending && (
             <FollowupChips items={followups} onPick={(t) => send(t)} />
