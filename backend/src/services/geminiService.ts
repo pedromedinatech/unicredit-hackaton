@@ -1,7 +1,7 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Anthropic from '@anthropic-ai/sdk';
 import { UserProfile, Product, Branch, ChatResponse } from '../types';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 function buildProfileSummary(profile: UserProfile): string {
   return [
@@ -78,24 +78,27 @@ RULES:
   * Set to true when: client shows specific product interest, has significant savings/income, mentions life events (buying home, starting business, having children), asks about investment or mortgage products
   * When suggest_advisor is true, naturally weave into your response: "Would you like a UniCredit advisor to reach out and walk you through this personally?"
   * Be warm and helpful, not pushy — frame it as added value
-  * Only set to true once per conversation (the frontend will stop showing the prompt after)`;
+  * Only set to true once per conversation`;
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-
-  // Inject system context as a priming user/model exchange at the start of history
-  const systemHistory = [
-    { role: 'user' as const, parts: [{ text: systemPrompt }] },
-    { role: 'model' as const, parts: [{ text: 'Understood. I will follow these instructions and respond only with valid JSON.' }] },
-  ];
-
-  const conversationMapped = conversationHistory.map((msg) => ({
-    role: msg.role === 'assistant' ? ('model' as const) : ('user' as const),
-    parts: [{ text: msg.content }],
+  const messages = conversationHistory.map((msg) => ({
+    role: msg.role === 'assistant' ? ('assistant' as const) : ('user' as const),
+    content: msg.content,
   }));
 
-  const chat = model.startChat({ history: [...systemHistory, ...conversationMapped] });
-  const result = await chat.sendMessage(message);
-  const raw = result.response.text().trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+  messages.push({ role: 'user', content: message });
+
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1024,
+    system: systemPrompt,
+    messages,
+  });
+
+  const raw = (response.content[0] as { type: string; text: string }).text
+    .trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
 
   try {
     return JSON.parse(raw) as ChatResponse;
