@@ -1,0 +1,14 @@
+[
+  {
+    "name": "UniCredit Iași - City Center",
+    "address": "Str. Cuza Vodă 35, Iași, Romania",
+    "phone": "+40 232 261 000",
+    "email": "iasi@unicredit.ro",
+    "hours": "Mon-Fri: 9:00-18:00, Sat: 9:00-13:00",
+    "distance_km": 2.5,
+    "coordinates": {
+      "lat": 47.1646,
+      "lng": 27.5842
+    }
+  }
+]

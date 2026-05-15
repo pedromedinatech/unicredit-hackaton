@@ -1,0 +1,143 @@
+[
+  {
+    "id": "current_account",
+    "name": "Current Account",
+    "category": "Accounts & Cards",
+    "description": "A flexible everyday banking account for managing your income and expenses. Includes online banking access, debit card, and mobile app.",
+    "key_benefits": [
+      "Free online and mobile banking",
+      "Instant transfers",
+      "No minimum balance required",
+      "Debit card included"
+    ],
+    "target_audience": ["students", "young professionals", "freelancers", "anyone new to banking"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/conturi-curente.html"
+  },
+  {
+    "id": "savings_account",
+    "name": "Savings Account",
+    "category": "Savings & Investment",
+    "description": "A savings account designed to help you grow your money with competitive interest rates while keeping funds accessible.",
+    "key_benefits": [
+      "Competitive interest rates",
+      "Funds accessible anytime",
+      "Automatic monthly interest",
+      "No fees"
+    ],
+    "target_audience": ["savers", "students", "anyone building an emergency fund", "low risk tolerance"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/conturi-de-economii.html"
+  },
+  {
+    "id": "term_deposit",
+    "name": "Term Deposit",
+    "category": "Savings & Investment",
+    "description": "Lock in your money for a fixed period (3, 6, or 12 months) and earn higher interest rates. Perfect for reaching specific financial goals.",
+    "key_benefits": [
+      "Higher interest rates than savings accounts",
+      "Fixed terms: 3, 6, or 12 months",
+      "Guaranteed returns",
+      "Starting from 500 RON"
+    ],
+    "target_audience": ["savers with specific goals", "low risk tolerance", "travel savers", "people with existing savings"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/depozite-la-termen.html"
+  },
+  {
+    "id": "credit_card",
+    "name": "Credit Card",
+    "category": "Accounts & Cards",
+    "description": "A flexible credit card for everyday purchases with rewards, cashback opportunities, and credit history building.",
+    "key_benefits": [
+      "Build credit history",
+      "Cashback on purchases",
+      "Contactless payments",
+      "Apple Pay & Google Pay"
+    ],
+    "target_audience": ["young adults", "credit builders", "frequent shoppers", "students"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/carduri-de-credit.html"
+  },
+  {
+    "id": "personal_loan",
+    "name": "Personal Loan",
+    "category": "Credits",
+    "description": "A personal loan for any purpose — travel, electronics, home improvements. Fixed monthly payments and competitive interest rates.",
+    "key_benefits": [
+      "Fixed monthly payments",
+      "Flexible loan amounts",
+      "Quick approval process",
+      "No collateral required"
+    ],
+    "target_audience": ["anyone needing a lump sum", "home improvement", "large purchases", "debt consolidation"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-de-nevoi-personale.html"
+  },
+  {
+    "id": "mortgage",
+    "name": "Mortgage Credit",
+    "category": "Credits",
+    "description": "Home purchase or refinancing loan with competitive rates and flexible terms.",
+    "key_benefits": [
+      "Competitive mortgage rates",
+      "Up to 30 years term",
+      "First home programs",
+      "Fixed or variable rates"
+    ],
+    "target_audience": ["home buyers", "people looking to refinance", "young families"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/credite/credit-ipotecar.html"
+  },
+  {
+    "id": "investment_funds",
+    "name": "Investment Funds",
+    "category": "Savings & Investment",
+    "description": "Diversified investment portfolios managed by professionals. Grow your wealth through capital markets with managed risk.",
+    "key_benefits": [
+      "Professional fund management",
+      "Diversified portfolio",
+      "Start from small amounts",
+      "Various risk profiles available"
+    ],
+    "target_audience": ["medium-high risk tolerance", "long-term investors", "wealth builders"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/economii-si-investitii/fonduri-de-investitii.html"
+  },
+  {
+    "id": "mobile_banking",
+    "name": "Mobile Banking App",
+    "category": "Digital Services",
+    "description": "Full-featured mobile banking app for managing accounts, making payments, and tracking spending on the go.",
+    "key_benefits": [
+      "24/7 account access",
+      "Instant transfers",
+      "Spending analytics",
+      "Biometric login",
+      "Free"
+    ],
+    "target_audience": ["everyone", "tech-savvy users", "busy professionals"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/servicii-digitale/mobile-banking.html"
+  },
+  {
+    "id": "genius_protect",
+    "name": "Genius Protect Insurance",
+    "category": "Insurance",
+    "description": "Comprehensive insurance package covering life, health, and accident protection with flexible coverage options.",
+    "key_benefits": [
+      "Life and accident coverage",
+      "Critical illness protection",
+      "Affordable monthly premiums",
+      "Simple claims process"
+    ],
+    "target_audience": ["young adults", "freelancers", "anyone seeking financial safety net"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/asigurari/genius-protect.html"
+  },
+  {
+    "id": "meal_card",
+    "name": "Meal Card",
+    "category": "Accounts & Cards",
+    "description": "A dedicated meal voucher card accepted at restaurants and food retailers across Romania.",
+    "key_benefits": [
+      "Tax-free benefit",
+      "Accepted nationwide",
+      "Contactless payments",
+      "Easy management online"
+    ],
+    "target_audience": ["employees", "young professionals", "anyone with meal benefits"],
+    "url": "https://www.unicredit.ro/ro/persoane-fizice/conturi-si-carduri/card-de-masa.html"
+  }
+]
