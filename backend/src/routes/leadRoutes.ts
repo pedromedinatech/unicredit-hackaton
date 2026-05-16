@@ -28,10 +28,11 @@ router.post('/leads', async (req: Request, res: Response) => {
 
     const lead: LeadInput = {
       name: clientProfile.name,
+      phone: clientProfile.phone ?? null,
       segment: clientProfile.segment,
-      esg_level: clientProfile.esg_level,
-      conversation_summary: conversationSummary,
-      advisor_reason: advisorReason,
+      esg_level: clientProfile.esg_level ?? null,
+      conversation_summary: conversationSummary ?? null,
+      advisor_reason: advisorReason ?? null,
     };
 
     const leadId = insertLead(lead);

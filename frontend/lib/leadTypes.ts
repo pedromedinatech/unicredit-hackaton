@@ -3,6 +3,7 @@ export type Segment = 'CONSERVATIVE' | 'BALANCED' | 'GROWTH' | 'AGGRESSIVE';
 export interface Lead {
   id: number;
   name: string;
+  phone?: string;
   segment?: Segment;
   esg_level?: number;
   conversation_summary?: string;

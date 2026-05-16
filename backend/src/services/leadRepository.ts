@@ -5,9 +5,9 @@ export function insertLead(input: LeadInput): number {
   const db = getDb();
   const stmt = db.prepare(`
     INSERT INTO leads
-      (name, segment, esg_level, conversation_summary, advisor_reason)
+      (name, phone, segment, esg_level, conversation_summary, advisor_reason)
     VALUES
-      (@name, @segment, @esg_level, @conversation_summary, @advisor_reason)
+      (@name, @phone, @segment, @esg_level, @conversation_summary, @advisor_reason)
   `);
   const result = stmt.run(input);
   return result.lastInsertRowid as number;

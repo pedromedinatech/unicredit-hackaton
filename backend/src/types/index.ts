@@ -2,6 +2,7 @@ export type Segment = 'CONSERVATIVE' | 'BALANCED' | 'GROWTH' | 'AGGRESSIVE';
 
 export interface UserProfile {
   name: string;
+  phone?: string;
   // MiFID II raw answers (A/B/C/D)
   q1_objective: string;
   q2_loss_reaction: string;
@@ -72,10 +73,11 @@ export interface ChatResponse {
 
 export interface LeadInput {
   name: string;
-  segment?: Segment;
-  esg_level?: number;
-  conversation_summary?: string;
-  advisor_reason?: string;
+  phone?: string | null;
+  segment?: Segment | null;
+  esg_level?: number | null;
+  conversation_summary?: string | null;
+  advisor_reason?: string | null;
 }
 
 export interface Lead extends LeadInput {
