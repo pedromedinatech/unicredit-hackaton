@@ -115,7 +115,7 @@ export function ChatClient({
 
         if (!res.ok) {
           const detail = await res.text().catch(() => "");
-          throw new Error(`Coach service returned ${res.status}. ${detail.slice(0, 120)}`);
+          throw new Error(`GENOVAI returned ${res.status}. ${detail.slice(0, 120)}`);
         }
 
         const body: CoachResponse = await res.json();
@@ -151,7 +151,7 @@ export function ChatClient({
         }
       } catch (err) {
         const msg =
-          err instanceof Error ? err.message : "Could not reach the coach service.";
+          err instanceof Error ? err.message : "Could not reach GENOVAI.";
         setError(msg);
       } finally {
         setPending(false);
@@ -165,10 +165,10 @@ export function ChatClient({
     try {
       const summary = messages
         .slice(-10)
-        .map((m) => `${m.role === "user" ? "Client" : "Coach"}: ${m.content}`)
+        .map((m) => `${m.role === "user" ? "Client" : "GENOVAI"}: ${m.content}`)
         .join("\n");
 
-      await fetch(LEADS_ENDPOINT, {
+      const res = await fetch(LEADS_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -178,6 +178,11 @@ export function ChatClient({
         }),
       });
 
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        throw new Error(`Failed to save lead (${res.status}): ${detail.slice(0, 120)}`);
+      }
+
       setShowAdvisorCTA(false);
       const confirmation: MessagePayload = {
         id: `confirm-${Date.now()}`,
@@ -186,8 +191,9 @@ export function ChatClient({
           "Your details have been shared with our team. A UniCredit advisor will reach out to you soon. In the meantime, feel free to keep asking me questions!",
       };
       setMessages((prev) => [...prev, confirmation]);
-    } catch {
-      setShowAdvisorCTA(false);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Could not save your request.";
+      setError(msg);
     } finally {
       setAdvisorSubmitting(false);
     }
@@ -203,7 +209,7 @@ export function ChatClient({
                 Hi {profile.name?.split(" ")[0] || "there"}, ready when you are.
               </h2>
               <p className="mt-1 text-sm text-unicredit-navy/70">
-                Ask the coach anything about your money, goals, or UniCredit products.
+                Ask GENOVAI anything about your money, goals, or UniCredit products.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {EXAMPLES.map((ex) => (

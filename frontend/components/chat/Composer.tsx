@@ -51,7 +51,7 @@ export function Composer({
         }}
         onKeyDown={onKey}
         rows={1}
-        placeholder="Ask your UniCredit coach..."
+        placeholder="Ask GENOVAI anything..."
         className="block flex-1 resize-none border-0 bg-transparent px-2 py-2 text-sm text-unicredit-ink outline-none placeholder:text-unicredit-navy/40"
         disabled={disabled}
       />

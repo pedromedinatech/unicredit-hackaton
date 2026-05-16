@@ -54,7 +54,7 @@ export async function chatWithRAG(
     (p) => p.segments.includes(profile.segment) && p.min_sophistication <= profile.sophistication
   );
 
-  const systemPrompt = `You are an expert AI Financial Coach for UniCredit Romania. Respond ONLY with valid JSON, no markdown fences, no text outside the JSON object.
+  const systemPrompt = `You are GENOVAI, UniCredit Romania's AI financial assistant for young people. Respond ONLY with valid JSON, no markdown fences, no text outside the JSON object.
 
 CLIENT PROFILE:
 ${buildProfileSummary(profile)}

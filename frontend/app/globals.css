@@ -1,5 +1,73 @@
 @import "tailwindcss";
 
+/* UniCredit Latin typeface (primary for Latin scripts) */
+@font-face {
+  font-family: 'UniCredit';
+  src: url('/font-unicredit-Latin/font-unicredit-completo/unicredit-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit';
+  src: url('/font-unicredit-Latin/font-unicredit-completo/unicredit-light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit';
+  src: url('/font-unicredit-Latin/font-unicredit-completo/unicredit-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit';
+  src: url('/font-unicredit-Latin/font-unicredit-completo/unicredit-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit';
+  src: url('/font-unicredit-Latin/font-unicredit-completo/unicredit-heavy.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* UniCredit CY typeface */
+@font-face {
+  font-family: 'UniCredit CY';
+  src: url('/font-unicredit-Cyrillic/UniCredit CY/Regular/unicredit_cy-regular-webfont.woff2') format('woff2'),
+       url('/font-unicredit-Cyrillic/UniCredit CY/Regular/unicredit_cy-regular-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit CY';
+  src: url('/font-unicredit-Cyrillic/UniCredit CY/Light/unicredit_cy-light-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit CY';
+  src: url('/font-unicredit-Cyrillic/UniCredit CY/Medium/unicredit_cy-medium-webfont.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'UniCredit CY';
+  src: url('/font-unicredit-Cyrillic/UniCredit CY/Bold/unicredit_cy-bold-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-unicredit-red: #e30613;
   --color-unicredit-red-dark: #b8050f;
@@ -10,7 +78,7 @@
   --color-unicredit-mist: #f5f6fa;
   --color-unicredit-line: #e6e8f0;
 
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-sans: "UniCredit", "UniCredit CY", system-ui, sans-serif;
 
   --radius-card: 12px;
   --radius-chip: 999px;

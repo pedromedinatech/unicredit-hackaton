@@ -2,7 +2,7 @@ import { Header } from "@/components/ui/Header";
 import { Onboarding } from "@/components/onboarding/Onboarding";
 
 export const metadata = {
-  title: "Build your profile — UniCredit Coach",
+  title: "Build your profile — GENOVAI",
 };
 
 export default function OnboardingPage() {

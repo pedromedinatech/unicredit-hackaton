@@ -9,9 +9,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "UniCredit AI Financial Coach",
+  title: "GENOVAI by UniCredit",
   description:
-    "Personalized financial advice and UniCredit product recommendations powered by AI.",
+    "GENOVAI — your personal financial guide by UniCredit. Get personalized advice and product recommendations in minutes.",
 };
 
 export const viewport: Viewport = {

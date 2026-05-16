@@ -1,57 +1,42 @@
+import Image from "next/image";
 import clsx from "clsx";
 
 export function Logo({
   className,
-  variant = "full",
-  size = 28,
+  height = 52,
 }: {
   className?: string;
-  variant?: "full" | "mark";
-  size?: number;
+  height?: number;
 }) {
-  const arc = (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      fill="none"
-      role="img"
-      aria-label="UniCredit logo mark"
-      className="shrink-0"
-    >
-      <path
-        d="M6 12 C 14 4, 26 4, 34 12"
-        stroke="var(--color-unicredit-red)"
-        strokeWidth="5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M8 24 C 14 32, 26 32, 32 24"
-        stroke="var(--color-unicredit-red)"
-        strokeWidth="5"
-        strokeLinecap="round"
-        fill="none"
-        opacity="0.9"
-      />
-    </svg>
-  );
-
-  if (variant === "mark") {
-    return <span className={clsx("inline-flex", className)}>{arc}</span>;
-  }
+  // The SVG (180×67) has the "UniCredit" text baseline at ~y=45.6 out of 67.
+  // Space below the text = (67-45.6)/67 ≈ 32% of height.
+  // Using items-end + marginBottom lifts GENOVAI to match that baseline.
+  // SVG text bottom sits at 45.6/67 ≈ 68% from top → 32% whitespace below.
+  // Subtract font descent (~9% of height) so the visible glyph bottom aligns, not the text box bottom.
+  const belowBaseline = Math.round(height * 0.26);
+  // SVG already has ~16px of right whitespace at h=52. Use gap=0 so total visual ≈ 16px.
+  const gap = 0;
 
   return (
-    <span
-      className={clsx("inline-flex items-center gap-2", className)}
-      aria-label="UniCredit"
-    >
-      {arc}
-      <span className="text-[18px] font-bold tracking-tight text-unicredit-navy">
-        UniCredit
-      </span>
-      <span className="hidden sm:inline text-[13px] font-medium text-unicredit-red ml-1">
-        Coach
+    <span className={clsx("inline-flex items-end", className)} style={{ gap: `${gap}px` }}>
+      <Image
+        src="/UC_LOGO.svg"
+        alt="UniCredit"
+        height={height}
+        width={0}
+        style={{ width: "auto", height: `${height}px` }}
+        priority
+      />
+      <span
+        style={{
+          fontSize: `${Math.round(height * 0.28)}px`,
+          letterSpacing: "0.1em",
+          lineHeight: 1,
+          marginBottom: `${belowBaseline}px`,
+        }}
+        className="font-semibold uppercase text-[#7a8fa6]"
+      >
+        GENOVAI
       </span>
     </span>
   );
