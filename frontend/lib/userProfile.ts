@@ -2,6 +2,7 @@ export type Segment = 'CONSERVATIVE' | 'BALANCED' | 'GROWTH' | 'AGGRESSIVE';
 
 export interface UserProfile {
   name: string;
+  phone: string;
   // MiFID II raw answers (A/B/C/D)
   q1_objective: string;
   q2_loss_reaction: string;

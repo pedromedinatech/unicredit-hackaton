@@ -1,5 +1,6 @@
 export type QuestionType =
   | "text"
+  | "tel"
   | "number"
   | "select"
   | "select-multiple"
@@ -8,6 +9,7 @@ export type QuestionType =
 export interface OnboardingQuestion {
   id: number;
   text: string;
+  subtitle?: string;
   type: QuestionType;
   options?: string[];
   required: boolean;
@@ -16,116 +18,125 @@ export interface OnboardingQuestion {
 export const ONBOARDING_QUESTIONS: OnboardingQuestion[] = [
   {
     id: 1,
-    text: "What is your full name?",
+    text: "What's your name?",
     type: "text",
     required: true,
   },
   {
     id: 2,
-    text: "What is your main investment goal?",
+    text: "What's your main financial goal right now?",
     type: "radio",
     options: [
-      "A) Protect my money from inflation",
-      "B) Generate regular income (dividends, coupons)",
-      "C) Grow my wealth over the long term",
-      "D) Achieve high returns, accepting more risk",
+      "A) Build savings and feel financially secure",
+      "B) Save for something specific (trip, car, studies)",
+      "C) Start growing my money for the future",
+      "D) Build wealth and generate passive income",
     ],
     required: true,
   },
   {
     id: 3,
-    text: "If your investment drops 20% in 3 months, what would you do?",
+    text: "You put €500 in an app and it drops to €400 in a month. What do you do?",
+    subtitle: "This helps us understand how you react under pressure.",
     type: "radio",
     options: [
-      "A) Sell everything to avoid further losses",
-      "B) Sell part of it to reduce exposure",
-      "C) Do nothing and wait for recovery",
-      "D) Buy more, it's an opportunity",
+      "A) Withdraw everything — I want my money back",
+      "B) Withdraw some to limit the damage",
+      "C) Leave it — markets recover, I'd wait",
+      "D) Add more — it's a chance to buy low",
     ],
     required: true,
   },
   {
     id: 4,
-    text: "When will you need this money, considering your life stage?",
+    text: "When do you think you'll need this money?",
     type: "radio",
     options: [
-      "A) Less than 1 year / Major financial obligations",
-      "B) 1-3 years / Stable with upcoming commitments",
-      "C) 3-7 years / Stable, no major commitments",
-      "D) 7+ years / Early career, few obligations",
+      "A) Less than a year — I might need it anytime",
+      "B) In 1 to 3 years",
+      "C) In 3 to 7 years",
+      "D) In 7+ years — I'm thinking long-term",
     ],
     required: true,
   },
   {
     id: 5,
-    text: "How would you describe your experience with financial products?",
+    text: "How much do you know about investing?",
     type: "radio",
     options: [
-      "A) None, only current accounts or deposits",
-      "B) Basic, investment funds or savings insurance",
-      "C) Intermediate, stocks, ETFs, or bonds",
-      "D) Advanced, derivatives, forex, structured products",
+      "A) Nothing — I only have a bank account",
+      "B) The basics — savings accounts or deposits",
+      "C) I've bought stocks, ETFs, or crypto before",
+      "D) I actively invest and know complex products",
     ],
     required: true,
   },
   {
     id: 6,
-    text: "What % of your monthly income can you consistently invest?",
+    text: "How much of your monthly income can you usually save?",
     type: "radio",
     options: [
-      "A) Less than 10%",
-      "B) 10-20%",
-      "C) 20-35%",
-      "D) More than 35%",
+      "A) Very little — my expenses eat most of it",
+      "B) Up to 10% of my income",
+      "C) Between 10% and 30%",
+      "D) More than 30%",
     ],
     required: true,
   },
   {
     id: 7,
-    text: "Do you have an emergency fund covering 3-6 months of expenses?",
+    text: "Do you have savings set aside for unexpected expenses?",
+    subtitle: "An emergency fund is money you can access immediately if needed.",
     type: "radio",
     options: [
-      "A) No",
-      "B) I have some, but less than 3 months",
-      "C) Yes, 3-6 months covered",
-      "D) Yes, more than 6 months covered",
+      "A) No — I have nothing saved for emergencies",
+      "B) A little — less than 1 month of expenses",
+      "C) Yes — around 1 to 3 months covered",
+      "D) Yes — more than 3 months covered",
     ],
     required: true,
   },
   {
     id: 8,
-    text: "What is the maximum loss you could sustain without affecting your daily life?",
+    text: "If you invested €1,000, how much could you afford to lose without it affecting your daily life?",
     type: "radio",
     options: [
-      "A) I cannot afford to lose anything",
-      "B) Up to 10%",
-      "C) Up to 25%",
-      "D) More than 25%",
+      "A) Nothing — I can't afford any loss",
+      "B) Up to €100 (10%)",
+      "C) Up to €250 (25%)",
+      "D) More than €250 — I'm in for the long run",
     ],
     required: true,
   },
   {
     id: 9,
-    text: "What annual return would you expect from your investment?",
+    text: "What annual return would you realistically hope for?",
     type: "radio",
     options: [
-      "A) 2-3% (beat inflation)",
-      "B) 4-7%",
-      "C) 7-12%",
-      "D) >12%",
+      "A) 2–3% — just beat inflation",
+      "B) 4–7% — steady and solid",
+      "C) 7–12% — I'm willing to take some risk",
+      "D) Over 12% — high risk, high reward",
     ],
     required: true,
   },
   {
     id: 10,
-    text: "Does sustainability influence your investment decisions?",
+    text: "Does sustainability matter to you when choosing financial products?",
     type: "radio",
     options: [
-      "A) No, I prioritize returns only",
-      "B) Interested, but not a deciding factor",
-      "C) I prefer ESG products if returns are comparable",
-      "D) Only certified sustainable-impact products",
+      "A) Not really — I focus on returns",
+      "B) A little, but it's not the main factor",
+      "C) Yes — I prefer sustainable options",
+      "D) Absolutely — only sustainable products for me",
     ],
     required: true,
+  },
+  {
+    id: 11,
+    text: "What's the best number to reach you?",
+    subtitle: "Optional — so a UniCredit advisor can follow up with you directly.",
+    type: "tel",
+    required: false,
   },
 ];

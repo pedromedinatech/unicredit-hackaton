@@ -29,6 +29,7 @@ function hasValue(question: OnboardingQuestion, answers: Answers): boolean {
 
 function buildProfile(answers: Answers): UserProfile {
   const name = typeof answers[1] === "string" ? answers[1] : "";
+  const phone = typeof answers[11] === "string" ? answers[11] : "";
 
   // Map radio answers to single letters (A/B/C/D)
   const extractLetter = (answerText: string): string => {
@@ -58,7 +59,7 @@ function buildProfile(answers: Answers): UserProfile {
     10: q9,
   };
 
-  return calculateProfile(name, answerMap);
+  return calculateProfile(name, phone, answerMap);
 }
 
 export function Onboarding() {
@@ -129,7 +130,7 @@ export function Onboarding() {
           Build your profile
         </h1>
         <p className="mt-1 text-sm text-unicredit-navy/70">
-          10 quick questions so the coach understands your situation.
+          A few quick questions so GENOVAI understands your situation.
         </p>
       </div>
 
@@ -157,6 +158,9 @@ export function Onboarding() {
             </span>
           )}
         </h2>
+        {question.subtitle && (
+          <p className="mt-1 text-sm text-unicredit-navy/55">{question.subtitle}</p>
+        )}
 
         <div className="mt-4">
           <QuestionInput
@@ -220,6 +224,19 @@ function QuestionInput({
         value={typeof value === "string" ? value : ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Type your answer..."
+        className="w-full rounded-xl border border-unicredit-line bg-white px-4 py-3 text-sm text-unicredit-navy placeholder:text-unicredit-navy/40 focus:border-unicredit-red focus:outline-none focus:ring-2 focus:ring-unicredit-red/20"
+      />
+    );
+  }
+
+  if (question.type === "tel") {
+    return (
+      <input
+        type="tel"
+        inputMode="tel"
+        value={typeof value === "string" ? value : ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="+39 333 123 4567"
         className="w-full rounded-xl border border-unicredit-line bg-white px-4 py-3 text-sm text-unicredit-navy placeholder:text-unicredit-navy/40 focus:border-unicredit-red focus:outline-none focus:ring-2 focus:ring-unicredit-red/20"
       />
     );

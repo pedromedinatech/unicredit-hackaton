@@ -82,6 +82,7 @@ function getLabel(question: string, answer: string): string {
 
 export function calculateProfile(
   name: string,
+  phone: string,
   answers: Record<number, string>
 ): UserProfile {
   const q1 = answers[2] || 'A';   // Investment Objective
@@ -147,6 +148,7 @@ export function calculateProfile(
 
   return {
     name,
+    phone,
     q1_objective: q1,
     q2_loss_reaction: q2,
     q3_horizon: q3,
