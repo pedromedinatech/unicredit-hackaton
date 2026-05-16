@@ -74,7 +74,7 @@ export default function ChatPage({
             />
           </div>
           <div className="lg:sticky lg:top-20 lg:self-start">
-            <BankPanel name={data.profile.name} />
+            <BankPanel name={data.profile.name} profile={data.profile} />
           </div>
         </div>
       </main>
